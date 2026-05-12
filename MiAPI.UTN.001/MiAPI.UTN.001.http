@@ -1,0 +1,6 @@
+@MiAPI.UTN._001_HostAddress = http://localhost:5051
+
+GET {{MiAPI.UTN._001_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
