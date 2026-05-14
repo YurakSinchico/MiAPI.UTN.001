@@ -21,6 +21,48 @@ namespace MiAPI.UTN._001.Controllers
             _context = context;
         }
 
+        //para calcular campos hacemos esto
+
+        [HttpGet("EstadisticaSalarios")]
+
+        public async Task<ActionResult<EstadisticaSalarios>> EstadisticaSalarios()
+        {
+            var salarioMaximo = await _context.Empleados.MaxAsync(e => e.Salario + e.Comision);
+            var salarioMinimo = await _context.Empleados.MinAsync(e => e.Salario + e.Comision);
+            var salarioPromedio = await _context.Empleados.AverageAsync(e => e.Salario + e.Comision);
+            var cantidadEmpleados = await _context.Empleados.CountAsync();
+            var pagoTotal = await _context.Empleados.SumAsync(e => e.Salario +e.Comision);
+
+
+       
+            var empleadoAntiguo = await _context.Empleados
+                .Include(e => e.Persona)
+                   .OrderBy (e => e.FechaIngreso)
+                   .FirstOrDefaultAsync();
+
+            var empleadoReciente = await _context .Empleados 
+                .Include(e => e.Persona)
+                .OrderByDescending(e => e.FechaIngreso)
+                .FirstOrDefaultAsync();
+
+            var resultado = new EstadisticaSalarios
+            {
+                SalarioMaximo = salarioMaximo,
+                SalarioMinimo = salarioMinimo,
+                SalarioPromedio = salarioMinimo,
+                CantidadEmpleados = cantidadEmpleados,
+                PagoTotal=pagoTotal,
+                EmpleadoAntiguo = empleadoAntiguo != null ? $"{empleadoAntiguo.Persona.Nombre}{empleadoAntiguo.Persona.Apellido}" : "N/A",
+                EmpleadoReciente = empleadoAntiguo != null ? $"{empleadoReciente.Persona.Nombre}{empleadoReciente.Persona.Apellido}" : "N/A"
+
+            };
+
+            return resultado ;
+
+        }
+
+        //
+
         // GET: api/Empleados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleado()

@@ -9,9 +9,45 @@ namespace MiAPI.UTN._001
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<MiAPIUTN_001Context>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("MiAPIUTN_001Context") ?? throw new InvalidOperationException("Connection string 'MiAPIUTN_001Context' not found.")));
+
+
+            //para volver a usar postgres despues de haber usadao las otras base de datos y se cambia lo mismo en el options
+            //para regresar a cualquier base de datos como mariadb, o sqlserver
+            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSql"))
+
+); 
+            //postgres
+            //    options.UseNpgsql(builder.Configuration.GetConnectionString("MiAPIUTN_001Context") ?? throw new InvalidOperationException("Connection string 'MiAPIUTN_001Context' not found.")));
+
+
+            // maria db
+            //         builder.Services.AddDbContext<MiAPIUTN_001Context>(options =>
+            //         options.UseMySql(
+            //         builder.Configuration.GetConnectionString("MariaDB"),
+            //         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MariaDB")),
+            //         mysqlOptions => mysqlOptions.EnableRetryOnFailure() 
+            //         )
+
+
+            //);
+            //hasta aqui maria db
+
+
+
+            //sqlserver
+            //builder.Services.AddDbContext<MiAPIUTN_001Context>(options =>
+
+            //options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
+
+            //);
+
+            //hasta aqui el sql server
+
+
+
 
             // Add services to the container.
 

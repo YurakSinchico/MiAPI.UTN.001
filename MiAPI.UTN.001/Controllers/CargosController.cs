@@ -21,6 +21,25 @@ namespace MiAPI.UTN._001.Controllers
             _context = context;
         }
 
+        [HttpGet("EstadisticaCargos")] //la ruta
+
+        public async Task<ActionResult<IEnumerable<EstadisticaCargos>>> EstadisticaCargos()
+        {
+            var estadistica = await _context.Cargos
+                .Include(c => c.Empleado)
+                .Select(c => new EstadisticaCargos
+                {
+                    Cargo =c.Name,
+                    CantidadEmpleados=c.Empleado.Count(),
+                    SalarioTotal =c.Empleado.Sum(e => e.Salario+e.Comision),
+                    SalarioPromedio = c.Empleado.Count() >0?
+                    c.Empleado.Average(e => e.Salario+e.Comision) : 0
+                })
+                .ToListAsync();
+            return Ok(estadistica);
+
+        }
+
         // GET: api/Cargos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cargo>>> GetCargo()
