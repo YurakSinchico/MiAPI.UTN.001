@@ -31,4 +31,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MiApp.UTN.Modelos\MiApp.UTN.Modelos.csproj" />
+  </ItemGroup>
+
 </Project>

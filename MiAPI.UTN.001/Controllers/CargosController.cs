@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiAPI.UTN._001.Data;
-using MiAPI.UTN._001.Models;
+using MiApp.UTN.Modelos;
 
 namespace MiAPI.UTN._001.Controllers
 {
@@ -23,11 +23,11 @@ namespace MiAPI.UTN._001.Controllers
 
         [HttpGet("EstadisticaCargos")] //la ruta
 
-        public async Task<ActionResult<IEnumerable<EstadisticaCargos>>> EstadisticaCargos()
+        public async Task<ActionResult<IEnumerable<EstadisticaCargo>>> EstadisticaCargos()
         {
             var estadistica = await _context.Cargos
                 .Include(c => c.Empleado)
-                .Select(c => new EstadisticaCargos
+                .Select(c => new EstadisticaCargo
                 {
                     Cargo =c.Name,
                     CantidadEmpleados=c.Empleado.Count(),

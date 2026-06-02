@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiAPI.UTN._001.Data;
-using MiAPI.UTN._001.Models;
+using MiApp.UTN.Modelos;
 
 namespace MiAPI.UTN._001.Controllers
 {

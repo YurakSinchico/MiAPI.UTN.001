@@ -1,6 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MiAPI.UTN._001.Models
+namespace MiApp.UTN.Modelos
 {
     public class Empleado
     {
@@ -9,7 +14,7 @@ namespace MiAPI.UTN._001.Models
 
 
         public double Salario { get; set; }
-        public double Comision {  get; set; }
+        public double Comision { get; set; }
 
         public DateTime FechaIngreso { get; set; }
 
@@ -17,7 +22,7 @@ namespace MiAPI.UTN._001.Models
 
         //Relaciones 
 
-   
+
         public int PersonaId { get; set; } //FK a Perosna 
 
         public Persona? Persona { get; set; }
@@ -25,11 +30,6 @@ namespace MiAPI.UTN._001.Models
 
 
         public int CargoId { get; set; }  //FK a Cargo
-        public Cargo? Cargo { get; set; }  //objetos de navegacion 
-
-
-
-
-
+        public Cargo? Cargo { get; set; }  //objetos de navegacion
     }
 }

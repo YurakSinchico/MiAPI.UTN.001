@@ -1,5 +1,8 @@
-﻿using MiApp.UTN.Modelos;
-namespace MiAPI.UTN._001.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MiAppUTNModelos
 {
     public class EstadisticaSalarios
     {
@@ -9,8 +12,8 @@ namespace MiAPI.UTN._001.Controllers
         public double SalarioPromedio { get; set; }
 
         public int CantidadEmpleados { get; set; }
-        public string EmpleadoAntiguo { get; set; } 
-        public string EmpleadoReciente {  get; set; }
+        public string EmpleadoAntiguo { get; set; }
+        public string EmpleadoReciente { get; set; }
         public double PagoTotal { get; set; }
 
     }
