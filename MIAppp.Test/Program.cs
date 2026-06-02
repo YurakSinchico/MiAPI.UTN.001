@@ -1,4 +1,4 @@
-﻿using Api.Consumer;
+﻿using Api.Consummer;
 
 using MiApp.UTN.Modelos;
 
@@ -8,7 +8,7 @@ namespace MiApp.Test
     {
         static void Main(string[] args)
         {
-            Crud<Cargo>.Endpoint = "https://localhost:8000/api/cargo";
+            Crud<Cargo>.Endpoint = "https://localhost:5051/api/cargo";
             var nuevoCargo = new Cargo { Description = "Cargo de prueba", Name = "Prueba" };
             nuevoCargo = Crud<Cargo>.Create(nuevoCargo);
         }

@@ -20,11 +20,22 @@ namespace Api.Consummer
                         System.Text.Json.JsonSerializer.Serialize(data),
                         Encoding.UTF8, "application/json"
                     );
-                    var response = httpClient.Send(request);
-                    var json = response.Content.ReadAsStringAsync().Result;
-                    var result = System.Text.Json.JsonSerializer.Deserialize<T>(json);
+                    httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
+                        );
 
-                    return result;
+                   
+                    var response = httpClient.Send(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = response.Content.ReadAsStringAsync().Result;
+                        var result = System.Text.Json.JsonSerializer.Deserialize<T>(json);
+
+                        return result;
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
                 }
             }
             catch (Exception ex)
