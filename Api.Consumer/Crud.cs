@@ -4,28 +4,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Consumer
+namespace Api.Consummer
 {
-    public static  class Crud
+    public static class Crud<T>
     {
-        public static void Create()
+        public static string Endpoint { get; set; }
+        public static T Create(T data)
         {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var request = new HttpRequestMessage(HttpMethod.Post, Endpoint);
+                    var contentBody = new StringContent(
+                        System.Text.Json.JsonSerializer.Serialize(data),
+                        Encoding.UTF8, "application/json"
+                    );
+                    var response = httpClient.Send(request);
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var result = System.Text.Json.JsonSerializer.Deserialize<T>(json);
 
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+                
         }
 
-        public static void Read()
+        public static T ReadById(string id)
         {
-
+            return default;
         }
 
-        public static void Update()
+        public static List<T> ReadAll()
         {
-
+            return new List<T>();
+        }
+        public static bool Update(string id, T data)
+        {
+            return false;
         }
 
-        public static void Delete()
+        public static bool Delete(string id)
         {
-
+            return true;
         }
+
     }
 }
