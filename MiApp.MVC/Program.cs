@@ -1,9 +1,16 @@
+using Api.Consummer;
+using MiApp.UTN.Modelos;
+
 namespace MiApp.MVC
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            Crud<Cargo>.Endpoint = "https://localhost:7188/api/Cargos";
+            Crud<Persona>.Endpoint = "https://localhost:7188/api/Personas";
+            Crud<Empleado>.Endpoint = "https://localhost:7188/api/Empleados";
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
