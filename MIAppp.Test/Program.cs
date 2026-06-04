@@ -8,9 +8,25 @@ namespace MiApp.Test
     {
         static void Main(string[] args)
         {
-            Crud<Cargo>.Endpoint = "https://localhost:5051/api/cargo";
-            var nuevoCargo = new Cargo { Description = "Cargo de prueba", Name = "Prueba" };
-            nuevoCargo = Crud<Cargo>.Create(nuevoCargo);
+            Crud<Cargo>.Endpoint = "https://localhost:7188/api/Cargos";
+            Crud <Persona>.Endpoint = "https://localhost:7188/api/Personas";
+            //var nuevoCargo = Crud<Cargo>.Create(new Cargo
+            //{
+            //    Description = "Cargo prueba",
+            //    Name = "Peueba"
+            //});
+
+            //var nuevaPersona = Crud<Persona>.Create(new Persona
+            //{
+            //    Nombre = "Juan",
+            //    Apellido = "Perez",
+            //    Direccion = "Calle plata 123",
+            //    Email = "abc@gamil.com",
+            //    Telefono = "12345567"
+            //});
+
+            Crud<Cargo>.Delete("1");
+            Console.ReadLine();
         }
     }
 }

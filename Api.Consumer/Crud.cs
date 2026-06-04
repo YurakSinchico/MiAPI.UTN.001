@@ -17,10 +17,14 @@ namespace Api.Consummer
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, Endpoint);
                     var contentBody = new StringContent(
-                        System.Text.Json.JsonSerializer.Serialize(data),
-                        Encoding.UTF8, "application/json"
+                        Newtonsoft.Json.JsonConvert.SerializeObject(data), //data -> Json
+                        Encoding.UTF8, 
+                        "application/json"
                     );
-                    httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
+                    request.Content = contentBody;
+
+                    httpClient.DefaultRequestHeaders.Accept.Add(
+                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
                         );
 
                    
@@ -28,7 +32,7 @@ namespace Api.Consummer
                     if (response.IsSuccessStatusCode)
                     {
                         var json = response.Content.ReadAsStringAsync().Result;
-                        var result = System.Text.Json.JsonSerializer.Deserialize<T>(json);
+                        var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
 
                         return result;
                     }
@@ -38,7 +42,7 @@ namespace Api.Consummer
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -47,21 +51,76 @@ namespace Api.Consummer
 
         public static T ReadById(string id)
         {
-            return default;
+            using (var httpClient=new HttpClient())
+            {
+                var request =new HttpRequestMessage(HttpMethod.Get, $"{Endpoint}/{id}");
+                var response = httpClient.Send(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+                    return result;
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+            
         }
 
         public static List<T> ReadAll()
         {
-            return new List<T>();
+            using (var httpClient = new HttpClient()) {
+                var request = new HttpRequestMessage(HttpMethod.Get, Endpoint);
+                var response = httpClient.Send(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(json);
+                    return result;
+                }
+                else { 
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
         public static bool Update(string id, T data)
         {
-            return false;
+            using (var httpClient = new HttpClient()) { 
+                var request = new HttpRequestMessage(HttpMethod.Put, $" {Endpoint}/{id}");
+                var contentBody = new StringContent(
+                    Newtonsoft.Json.JsonConvert.SerializeObject(data),
+                    Encoding.UTF8,
+                    "application/json"
+                    );
+                request.Content = contentBody;
+                var response = httpClient.Send(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
 
         public static bool Delete(string id)
         {
-            return true;
+            using (var httpClient = new HttpClient()) {
+                var request = new HttpRequestMessage(HttpMethod.Delete, $"{Endpoint}/{id}");
+                var response= httpClient.Send(request);
+                if (response.IsSuccessStatusCode) {
+                    return true;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase); 
+                }
+            }
         }
 
     }
