@@ -24,16 +24,18 @@ namespace MiApp.MVC.Controllers
         // GET: CargosController/Create
         public ActionResult Create()
         {
+            //devuelve vista sin datos 
             return View();
         }
 
         // POST: CargosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Cargo data)
         {
             try
             {
+                var nuevoCargo = Crud<Cargo>.Create(data);
                 return RedirectToAction(nameof(Index));
             }
             catch
