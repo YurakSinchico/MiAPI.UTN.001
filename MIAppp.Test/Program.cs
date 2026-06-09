@@ -8,7 +8,7 @@ namespace MiApp.Test
     {
         static void Main(string[] args)
         {
-            Crud<Cargo>.Endpoint = "https://localhost:7188/api/Cargos";
+            Crud<Cargo>.Endpoint = "https://localhost:7188/api/Cargos";   
             Crud <Persona>.Endpoint = "https://localhost:7188/api/Personas";
             //var nuevoCargo = Crud<Cargo>.Create(new Cargo
             //{
