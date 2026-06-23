@@ -31,6 +31,36 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Empleado</th>
+            <th>Salario</th>
+            <th>Comision</th>
+            <th>Fecha Ingreso</th>
+            <th> Acciones </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Empleado empleado in ViewBag.ListaEmpleados)
+        {
+            <tr>
+                <td>@empleado.Id</td>
+                <td>@empleado.Persona.Apellido @empleado.Persona.Nombre</td>
+                <td>@empleado.Salario</td>
+                <td>@empleado.Comision</td>
+                <td> @empleado.FechaIngreso</td>
+                <td>
+                    <a asp-controller="Empleados" asp-action="Edit" asp-route-id="@empleado.Id" class="btn btn-sm btn-warning">Editar</a>
+
+                    <a asp-controller="Empleados" asp-action="Delete" asp-route-id="@empleado.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -1,6 +1,8 @@
 <Solution>
   <Project Path="Api.Consumer/Api.Consumer.csproj" Id="6d933df7-09e4-4fb9-b12e-03cee7bbfeeb" />
   <Project Path="MiAPI.UTN.001/MiAPI.UTN.001.csproj" />
+  <Project Path="MiApp.MVC.Seguro/MiApp.MVC.Seguro.csproj" Id="43064163-50cd-4d36-a7ff-ccacc6da9e1a" />
+  <Project Path="MiApp.MVC.Seguroo/MiApp.MVC.Seguroo.csproj" Id="3a2189de-a33e-4cc6-8f44-adfbc8cf007a" />
   <Project Path="MiApp.MVC/MiApp.MVC.csproj" Id="8556c9e4-584e-4648-b0cd-e74048f5e53b" />
   <Project Path="MiApp.UTN.Modelos/MiApp.UTN.Modelos.csproj" Id="e6945e2b-bafe-42fa-a20d-25f8848c783b" />
   <Project Path="MIAppp.Test/MIAppp.Test.csproj" Id="c903272e-57ef-4ec8-b74f-cf40429f1c15" />
