@@ -67,7 +67,11 @@ namespace MiAPI.UTN._001.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleado()
         {
-            return await _context.Empleados.ToListAsync();
+            
+            return await _context.Empleados
+                .Include(e => e.Persona )
+            .Include( c => c.Cargo)
+            .ToListAsync();
         }
 
         // GET: api/Empleados/5
@@ -125,10 +129,30 @@ namespace MiAPI.UTN._001.Controllers
         [HttpPost]
         public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
-            _context.Empleados.Add(empleado);
-            await _context.SaveChangesAsync();
+            if (empleado.FechaIngreso.Kind == DateTimeKind.Unspecified)
+            {
+                empleado.FechaIngreso = DateTime.SpecifyKind(empleado.FechaIngreso, DateTimeKind.Utc);
+            }
+            else
+            {
+                empleado.FechaIngreso = empleado.FechaIngreso.ToUniversalTime();
+            }
 
-            return CreatedAtAction("GetEmpleado", new { id = empleado.Id }, empleado);
+            // 2. Mantener seguras las entidades de navegación para evitar conflictos
+            //empleado.Persona = null;
+            //empleado.Cargo = null;
+
+            try
+            {
+                _context.Empleados.Add(empleado);
+                await _context.SaveChangesAsync();
+                return Ok(empleado);
+            }
+            catch (Exception ex)
+            {
+                var innerError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, $"Error interno en PostgreSQL: {innerError}");
+            }
         }
 
         // DELETE: api/Empleados/5

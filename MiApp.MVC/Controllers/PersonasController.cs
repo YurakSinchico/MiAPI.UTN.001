@@ -1,42 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Api.Consummer;
 using MiApp.UTN.Modelos;
-using Api.Consummer;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MiApp.MVC.Controllers
 {
-    public class CargosController : Controller
+    public class PersonasController : Controller
     {
-        // GET: CargosController
+        // GET: PersonasController
         public ActionResult Index()
         {
-            var cargos = Crud<Cargo>.ReadAll();
-            return View(cargos);
+            var personas=Crud<Persona>.ReadAll();
+            return View(personas);
         }
 
-        // GET: CargosController/Details/5
+        // GET: PersonasController/Details/5
         public ActionResult Details(string id)
         {
-            var datos = Crud<Cargo>.ReadById(id);
+            var datos = Crud<Persona>.ReadById(id);
             return View(datos);
         }
 
-        // GET: CargosController/Create
+        // GET: PersonasController/Create
         public ActionResult Create()
         {
-            //devuelve vista sin datos 
-            return View();
+
+            return View(); 
         }
 
-        // POST: CargosController/Create
+        // POST: PersonasController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cargo data)
+        public ActionResult Create(Persona data)
         {
             try
             {
-                var nuevoCargo = Crud<Cargo>.Create(data);
+                var nuevapersona = Crud<Persona>.Create(data);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,22 +44,23 @@ namespace MiApp.MVC.Controllers
             }
         }
 
-        // GET: CargosController/Edit/5
+        // GET: PersonasController/Edit/5
         public ActionResult Edit(int id)
         {
-            var datos = Crud<Cargo>.ReadById(id.ToString());
-            ViewBag.ListaEmpleados=Crud<Empleado>.ReadAll().Where(e => e.CargoId == id).ToList();
+            var datos=Crud<Persona>.ReadById(id.ToString());
+        
             return View(datos);
         }
 
-        // POST: CargosController/Edit/5
+        // POST: PersonasController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Cargo datos)
+        public ActionResult Edit(int id, Persona datos)
         {
             try
-            {
-                Crud<Cargo>.Update(id.ToString(), datos);
+            { 
+                Crud<Persona>.Update(id.ToString(), datos);
+            
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -69,27 +69,28 @@ namespace MiApp.MVC.Controllers
             }
         }
 
-        // GET: CargosController/Delete/5
+        // GET: PersonasController/Delete/5
         public ActionResult Delete(string id)
         {
-            var datos = Crud<Cargo>.ReadById(id);
+            var datos = Crud<Persona>.ReadById(id);
             return View(datos);
         }
 
-        // POST: CargosController/Delete/5
+        // POST: PersonasController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, Cargo datos)
+        public ActionResult Delete(string id, Persona datos)
         {
             try
             {
-                Crud<Cargo>.Delete(id);
+                Crud<Persona>.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 ViewData["Message"] = ex.Message;
                 return View(datos);
+
             }
         }
     }

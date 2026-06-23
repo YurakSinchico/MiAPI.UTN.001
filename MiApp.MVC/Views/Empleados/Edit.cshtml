@@ -1,0 +1,63 @@
+﻿@using MiApp.UTN.Modelos
+
+@model Empleado
+
+@{
+    ViewData["Title"] = "Editar Empleado";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Editar Empleado</h2>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    @* CAMBIO CRÍTICO: Campo oculto para mantener el Id del empleado al enviar el formulario *@
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Persona" class="form-label"></label>
+        @* Corregido para que use ViewData en lugar de ViewBag, tal como lo envías desde el controlador *@
+        <select asp-for="PersonaId" asp-items="@(ViewData["ListaPersonas"] as IEnumerable<SelectListItem>)" class="form-select">
+            <option value="">--Elija una persona -- </option>
+        </select>
+        <span asp-validation-for="PersonaId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Cargo" class="form-label"></label>
+        @* Corregido para que use ViewData en lugar de ViewBag, tal como lo envías desde el controlador *@
+        <select asp-for="CargoId" asp-items="@(ViewData["ListaCargos"] as IEnumerable<SelectListItem>)" class="form-select">
+            <option value="">--Elija un cargo -- </option>
+        </select>
+        <span asp-validation-for="CargoId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaIngreso" class="form-label"></label>
+        <input asp-for="FechaIngreso" class="form-control" />
+        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Salario" class="form-label"></label>
+        <input asp-for="Salario" class="form-control" />
+        <span asp-validation-for="Salario" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Comision" class="form-label"></label>
+        <input asp-for="Comision" class="form-control" />
+        <span asp-validation-for="Comision" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
